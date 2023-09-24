@@ -3,6 +3,7 @@ package org.example.Flight;
 import org.example.CabinCrewMember;
 import org.example.Passenger;
 import org.example.Pilot;
+import org.example.Flight.Plane;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Flight {
     private Airport departure;
     private String departureTime;
 
-    public ArrayList<Pilot> getPilots() {
+    private ArrayList<Pilot> pilots() {
         return pilots;
     }
 
@@ -28,6 +29,16 @@ public class Flight {
         return passengers;
     }
 
+    public ArrayList<CabinCrewMember> members() {
+        return members;
+    }
+
+    public ArrayList<Passenger> passengers() {
+        return passengers;
+    }
+    public int getPilots(){
+        return pilots.size();
+    }
     public Plane getPlane() {
         return plane;
     }
@@ -36,12 +47,12 @@ public class Flight {
         return flightNumber;
     }
 
-    public Airport getDestination() {
-        return destination;
+    public String getDestination() {
+        return destination.getCode();
     }
 
-    public Airport getDeparture() {
-        return departure;
+    public String getDeparture() {
+        return departure.getCode();
     }
 
     public String getDepartureTime() {
@@ -56,15 +67,23 @@ public class Flight {
         this.departureTime = departureTime;
     }
 
-    public Flight(ArrayList<Pilot> pilots, ArrayList<CabinCrewMember> members, ArrayList<Passenger> passengers, Plane plane, String flightNumber, Airport destination, Airport departure, String departureTime) {
-        this.pilots = pilots;
-        this.members = members;
-        this.passengers = passengers;
+    public Flight(Plane plane, String flightNumber, Airport destination, Airport departure, String departureTime) {
+        this.pilots = new ArrayList<Pilot>();
+        this.members = new ArrayList<CabinCrewMember>();
+        this.passengers = new ArrayList<Passenger>();
         this.plane = plane;
         this.flightNumber = flightNumber;
         this.destination = destination;
         this.departure = departure;
         this.departureTime = departureTime;
+    }
+    public int availableSeats(){
+        return (this.plane.getPlaneCapacity() - this.getPassengers());
+    }
+
+    public void addPassenger(Passenger passenger) {
+        if (this.plane.getPlaneCapacity() > this.getPassengers()){
+            this.passengers.add(passenger);
     }
 
 
